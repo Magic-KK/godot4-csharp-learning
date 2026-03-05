@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 2 课：C# 语言基础回顾 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="../index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="../index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="../advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="../projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Lesson Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl">2</span>
+                <div>
+                    <h1 class="text-4xl font-bold text-blue-400">C# 语言基础回顾</h1>
+                    <p class="text-gray-400 mt-2">⏱️ 预计时间：45 分钟 · 难度：⭐⭐</p>
+                </div>
+            </div>
+            <div class="progress-bar h-1 bg-gray-700 rounded-full">
+                <div class="progress-bar loaded h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-blue-400">🎯 学习目标</h2>
+            <ul class="space-y-2 text-gray-300">
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>回顾 C# 核心概念：类、继承、接口、泛型</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>理解 Godot C# 的特殊要求和命名约定</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>掌握 Godot 中的生命周期方法</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>学会使用 Godot 特有的类型和 API</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 1 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 1. C# 核心概念快速回顾</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">类与对象</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">using Godot;
+
+public partial class Player : CharacterBody2D
+{
+    // 属性
+    public int Health { get; set; } = 100;
+    public float Speed { get; set; } = 200f;
+    
+    // 字段
+    private Vector2 _velocity;
+    private bool _isDead = false;
+    
+    // 构造函数（Godot 中较少使用）
+    public Player()
+    {
+        GD.Print("Player created!");
+    }
+}</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">继承</h3>
+                <p class="text-gray-300 mb-4">Godot C# 中，所有脚本都继承自 Godot 的基类：</p>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 2D 角色控制器
+public partial class Player : CharacterBody2D { }
+
+// 3D 角色控制器
+public partial class Player3D : CharacterBody3D { }
+
+// 普通节点
+public partial class GameManager : Node { }
+
+// UI 控件
+public partial class MainMenu : Control { }</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">接口</h3>
+                <p class="text-gray-300 mb-4">接口在 Godot 中用于定义行为规范：</p>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 定义接口
+public interface IDamageable
+{
+    void TakeDamage(int amount);
+    void Heal(int amount);
+    bool IsAlive { get; }
+}
+
+// 实现接口
+public partial class Enemy : CharacterBody2D, IDamageable
+{
+    private int _health = 100;
+    
+    public bool IsAlive => _health > 0;
+    
+    public void TakeDamage(int amount)
+    {
+        _health -= amount;
+        GD.Print($"Enemy took {amount} damage, remaining: {_health}");
+    }
+    
+    public void Heal(int amount)
+    {
+        _health += amount;
+        GD.Print($"Enemy healed {amount} HP");
+    }
+}</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">泛型</h3>
+                <p class="text-gray-300 mb-4">泛型在 Godot 资源管理中非常有用：</p>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 泛型资源加载器
+public class ResourceLoader<T> where T : Resource
+{
+    public static T Load(string path)
+    {
+        return GD.Load<T>(path);
+    }
+}
+
+// 使用
+var texture = ResourceLoader<Texture2D>.Load("res://player.png");
+var script = ResourceLoader<Script>.Load("res://player.cs");</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 2. Godot C# 特殊要求</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400">⚠️ 必须遵守的规则</h3>
+                
+                <div class="space-y-4 text-gray-300">
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">1. 类名必须与文件名一致</h4>
+                        <p class="text-gray-400 text-sm mb-2">Player.cs 文件中的类必须命名为 Player</p>
+                        <div class="code-block">
+                            <code>// ✅ 正确：Player.cs
+public partial class Player : CharacterBody2D { }
+
+// ❌ 错误：Player.cs
+public partial class MyPlayer : CharacterBody2D { }</code>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">2. 必须使用 partial 关键字</h4>
+                        <p class="text-gray-400 text-sm mb-2">Godot 需要生成部分代码</p>
+                        <div class="code-block">
+                            <code>// ✅ 正确
+public partial class Player : CharacterBody2D { }
+
+// ❌ 错误
+public class Player : CharacterBody2D { }</code>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">3. 使用 [Export] 暴露属性到编辑器</h4>
+                        <p class="text-gray-400 text-sm mb-2">让属性在 Inspector 中可编辑</p>
+                        <div class="code-block">
+                            <code>[Export] public float Speed { get; set; } = 200f;
+[Export] public int MaxHealth { get; set; } = 100;
+[Export(Group="Combat")] public int Damage { get; set; } = 10;</code>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">4. 使用 [Signal] 声明信号</h4>
+                        <div class="code-block">
+                            <code>[Signal] public delegate void HealthChangedEventHandler(int newHealth);
+[Signal] public delegate void DiedEventHandler();
+
+// 触发信号
+EmitSignal(SignalName.HealthChanged, _health);
+EmitSignal(SignalName.Died);</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 3. Godot 生命周期方法</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <p class="text-gray-300 mb-4">Godot 节点有特定的生命周期方法，按以下顺序调用：</p>
+                
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded px-2 py-1 text-sm font-mono">_Ready()</span>
+                        <p class="text-gray-400">节点进入场景树时调用一次，用于初始化</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="bg-blue-600 text-white rounded px-2 py-1 text-sm font-mono">_Process(double delta)</span>
+                        <p class="text-gray-400">每帧调用，用于逻辑更新（受帧率影响）</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="bg-purple-600 text-white rounded px-2 py-1 text-sm font-mono">_PhysicsProcess(double delta)</span>
+                        <p class="text-gray-400">固定间隔调用，用于物理相关更新（推荐）</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="bg-red-600 text-white rounded px-2 py-1 text-sm font-mono">_ExitTree()</span>
+                        <p class="text-gray-400">节点离开场景树时调用，用于清理</p>
+                    </div>
+                </div>
+
+                <div class="code-block mt-6">
+                    <code class="language-csharp">public partial class Player : CharacterBody2D
+{
+    private int _health = 100;
+    
+    public override void _Ready()
+    {
+        // 初始化，只调用一次
+        GD.Print("Player is ready!");
+        _health = 100;
+    }
+    
+    public override void _Process(double delta)
+    {
+        // 每帧调用（不推荐用于物理）
+        // 适合：动画、UI 更新、视觉效果
+    }
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        // 固定间隔调用（推荐用于物理）
+        // 适合：移动、碰撞检测、物理计算
+        HandleMovement();
+    }
+    
+    public override void _ExitTree()
+    {
+        // 清理资源
+        GD.Print("Player is leaving the scene");
+    }
+    
+    private void HandleMovement()
+    {
+        // 移动逻辑
+    }
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 4. Godot 常用类型</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="pb-3 text-blue-400 font-semibold">类型</th>
+                                <th class="pb-3 text-blue-400 font-semibold">说明</th>
+                                <th class="pb-3 text-blue-400 font-semibold">示例</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-300">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">Vector2</td>
+                                <td class="py-3">2D 向量</td>
+                                <td class="py-3 font-mono text-xs">new Vector2(1, 0)</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">Vector3</td>
+                                <td class="py-3">3D 向量</td>
+                                <td class="py-3 font-mono text-xs">new Vector3(1, 0, 0)</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">Color</td>
+                                <td class="py-3">颜色值</td>
+                                <td class="py-3 font-mono text-xs">Colors.Red / new Color(1,0,0)</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">Rect2</td>
+                                <td class="py-3">2D 矩形</td>
+                                <td class="py-3 font-mono text-xs">new Rect2(0, 0, 100, 100)</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">Transform2D</td>
+                                <td class="py-3">2D 变换</td>
+                                <td class="py-3 font-mono text-xs">Transform2D.Identity</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">Quaternion</td>
+                                <td class="py-3">四元数（3D 旋转）</td>
+                                <td class="py-3 font-mono text-xs">Quaternion.Identity</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-green-400">📝 实践练习：编写基础类</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-green-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习目标</h3>
+                <p class="text-gray-300 mb-6">创建一个完整的 Player 类，包含属性、方法、信号和生命周期方法。</p>
+                
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习要求</h3>
+                <ol class="space-y-4 text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                        <span>创建 Player.cs 文件，继承自 CharacterBody2D</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                        <span>添加 [Export] 属性：Speed、MaxHealth、Damage</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                        <span>声明两个信号：HealthChanged 和 Died</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                        <span>实现 _Ready()、_PhysicsProcess() 方法</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                        <span>添加 TakeDamage() 和 Heal() 方法</span>
+                    </li>
+                </ol>
+                
+                <div class="mt-6 p-4 bg-gray-900 rounded-lg border border-gray-700">
+                    <h4 class="font-semibold text-yellow-400 mb-2">💡 提示</h4>
+                    <p class="text-gray-400 text-sm">参考答案在示例代码仓库中，但请先自己尝试完成！</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center pt-8 border-t border-gray-700">
+            <a href="lesson1-editor-basics.html" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                ← 上一课：编辑器入门
+            </a>
+            <a href="lesson3-node-system.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
+                下一课：节点与场景系统 →
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/Magic-KK/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="../js/theme.js"></script>
+</body>
+</html>

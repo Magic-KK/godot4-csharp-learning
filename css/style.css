@@ -132,6 +132,28 @@ html {
   
   .nav-menu {
     display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1f2937;
+    border-top: 1px solid #374151;
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .nav-menu.active {
+    display: flex;
+  }
+  
+  .nav-menu a {
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+  }
+  
+  .nav-menu a:hover {
+    background: #374151;
   }
   
   .mobile-menu-btn {
@@ -140,6 +162,12 @@ html {
   
   .card-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu-btn {
+    display: none;
   }
 }
 
