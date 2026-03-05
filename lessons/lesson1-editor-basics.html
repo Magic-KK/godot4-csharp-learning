@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 1 课：Godot 4 编辑器入门 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="../index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="../index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="../advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="../projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Lesson Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl">1</span>
+                <div>
+                    <h1 class="text-4xl font-bold text-blue-400">Godot 4 编辑器入门</h1>
+                    <p class="text-gray-400 mt-2">⏱️ 预计时间：30 分钟 · 难度：⭐</p>
+                </div>
+            </div>
+            <div class="progress-bar h-1 bg-gray-700 rounded-full">
+                <div class="progress-bar loaded h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-blue-400">🎯 学习目标</h2>
+            <ul class="space-y-2 text-gray-300">
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>熟悉 Godot 4 的界面布局和各面板功能</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>理解项目面板、场景面板、检查器的作用</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>掌握文件系统管理和工作区切换</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>记住常用快捷键，提高开发效率</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 1 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 1. Godot 4 界面概览</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <p class="text-gray-300 mb-4">
+                    Godot 4 的编辑器界面经过重新设计，更加现代化和直观。主界面分为以下几个核心区域：
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                        <h3 class="font-semibold text-blue-400 mb-2">📁 项目面板 (Project)</h3>
+                        <p class="text-gray-400 text-sm">显示项目中的所有文件和资源，支持文件夹层级结构。可以拖拽文件到场景中快速创建节点。</p>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                        <h3 class="font-semibold text-blue-400 mb-2">🎬 场景面板 (Scene)</h3>
+                        <p class="text-gray-400 text-sm">显示当前场景的节点树结构。可以添加、删除、重命名节点，以及调整节点层级关系。</p>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                        <h3 class="font-semibold text-blue-400 mb-2">⚙️ 检查器 (Inspector)</h3>
+                        <p class="text-gray-400 text-sm">显示选中节点的属性和信号。可以修改属性值、连接信号、添加脚本。</p>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                        <h3 class="font-semibold text-blue-400 mb-2">👁️ 视图窗口 (Viewport)</h3>
+                        <p class="text-gray-400 text-sm">2D/3D 编辑区域，可以预览和编辑场景内容。支持多视图布局和实时预览。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 2. 工作区切换</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <p class="text-gray-300 mb-4">
+                    Godot 4 顶部工具栏提供了快速切换工作区的按钮，每个工作区针对不同的开发任务进行了优化：
+                </p>
+                
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <span class="bg-blue-600 text-white rounded px-2 py-1 text-sm font-medium">2D</span>
+                        <p class="text-gray-400">2D 游戏开发工作区，显示 2D 编辑工具和画布</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="bg-blue-600 text-white rounded px-2 py-1 text-sm font-medium">3D</span>
+                        <p class="text-gray-400">3D 游戏开发工作区，显示 3D 视图和建模工具</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="bg-blue-600 text-white rounded px-2 py-1 text-sm font-medium">脚本</span>
+                        <p class="text-gray-400">代码编辑工作区，支持 C# 和 GDScript</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="bg-blue-600 text-white rounded px-2 py-1 text-sm font-medium">AssetLib</span>
+                        <p class="text-gray-400">资源库，可以下载和安装社区创建的插件和资源</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 3. 常用快捷键</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="pb-3 text-blue-400 font-semibold">快捷键</th>
+                                <th class="pb-3 text-blue-400 font-semibold">功能</th>
+                                <th class="pb-3 text-blue-400 font-semibold">工作区</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-300">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm bg-gray-900 rounded">Ctrl + N</td>
+                                <td class="py-3">创建新场景</td>
+                                <td class="py-3 text-gray-500">通用</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm bg-gray-900 rounded">Ctrl + S</td>
+                                <td class="py-3">保存当前场景</td>
+                                <td class="py-3 text-gray-500">通用</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm bg-gray-900 rounded">F5</td>
+                                <td class="py-3">运行项目</td>
+                                <td class="py-3 text-gray-500">通用</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm bg-gray-900 rounded">F6</td>
+                                <td class="py-3">运行当前场景</td>
+                                <td class="py-3 text-gray-500">通用</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm bg-gray-900 rounded">W / E / R</td>
+                                <td class="py-3">选择/移动/旋转工具</td>
+                                <td class="py-3 text-gray-500">2D/3D</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm bg-gray-900 rounded">Ctrl + Shift + A</td>
+                                <td class="py-3">添加节点</td>
+                                <td class="py-3 text-gray-500">场景</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm bg-gray-900 rounded">Ctrl + Alt + S</td>
+                                <td class="py-3">创建脚本</td>
+                                <td class="py-3 text-gray-500">场景</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-green-400">📝 实践练习：创建第一个项目</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-green-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习目标</h3>
+                <p class="text-gray-300 mb-6">创建一个空的 Godot 4 项目，熟悉项目创建流程和界面布局。</p>
+                
+                <h3 class="text-lg font-semibold mb-4 text-green-400">步骤指南</h3>
+                <ol class="space-y-4 text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                        <span>启动 Godot 4，在项目管理器中点击「新建项目」</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                        <span>选择一个空文件夹作为项目目录，输入项目名称（如"MyFirstProject"）</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                        <span>选择渲染器（2D 项目推荐选择「兼容性」，3D 项目推荐「前进+</td>）</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                        <span>点击「创建并编辑」，进入编辑器界面</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                        <span>浏览各个面板，尝试点击不同的工作区切换按钮</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+                        <span>按 Ctrl + Shift + A 打开添加节点对话框，浏览可用的节点类型</span>
+                    </li>
+                </ol>
+                
+                <div class="mt-6 p-4 bg-gray-900 rounded-lg border border-gray-700">
+                    <h4 class="font-semibold text-yellow-400 mb-2">💡 提示</h4>
+                    <p class="text-gray-400 text-sm">不要担心「弄坏」什么，Godot 的项目结构很清晰，随时可以重新创建。大胆尝试是学习的最佳方式！</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center pt-8 border-t border-gray-700">
+            <a href="basics.html" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                ← 返回基础教程
+            </a>
+            <a href="lesson2-csharp-basics.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
+                下一课：C# 语言基础回顾 →
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/niuniu/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="../js/theme.js"></script>
+</body>
+</html>

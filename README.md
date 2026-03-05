@@ -6,6 +6,16 @@
 
 访问：https://niuniu.github.io/godot4-csharp-learning
 
+## 📦 示例代码仓库
+
+每个教程和实战项目都配有完整的示例代码：
+
+- **基础教程示例**: https://github.com/niuniu/godot4-csharp-examples-basic
+- **进阶内容示例**: https://github.com/niuniu/godot4-csharp-examples-advanced
+- **实战项目源码**: https://github.com/niuniu/godot4-csharp-projects
+
+> 💡 建议边学边做，下载示例代码后自己手动敲一遍，不要直接复制粘贴。
+
 ## 📚 内容结构
 
 ### 基础教程
@@ -107,6 +117,22 @@ Godot 4 C# 知识体系
 2. **动手实践** - 看完教程立即动手做，代码要自己敲
 3. **记录笔记** - 建立自己的知识库，记录问题和解决方案
 4. **完成项目** - 通过完整项目巩固所学知识
+
+## 📅 推荐学习路径
+
+| 阶段 | 内容 | 预计时间 | 完成标志 |
+|------|------|----------|----------|
+| 第 1-2 周 | 基础教程 (6 课) | 15-20 小时 | 能创建简单 2D 场景 |
+| 第 3-4 周 | 进阶内容 (6 主题) | 20-25 小时 | 理解信号、资源、动画系统 |
+| 第 5-8 周 | 实战项目 (选 2-3 个) | 40-50 小时 | 完成可发布的游戏原型 |
+| 持续 | 深入学习/自定义项目 | 视情况而定 | 建立个人作品集 |
+
+## 🔗 有用链接
+
+- [Godot 官方文档](https://docs.godotengine.org/)
+- [Godot C# API 参考](https://docs.godotengine.org/en/stable/classes/index.html)
+- [Godot 官方 Discord](https://discord.gg/godotengine)
+- [r/godot Reddit 社区](https://www.reddit.com/r/godot/)
 
 ## 📄 许可证
 
