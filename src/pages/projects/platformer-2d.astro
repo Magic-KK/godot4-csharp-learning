@@ -1,0 +1,294 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="2D 平台跳跃游戏">
+  <div class="mb-8">
+    <a href="/projects/" class="text-blue-400 hover:underline">← 返回实战项目</a>
+  </div>
+
+  <article class="prose prose-invert max-w-none">
+    <h1>项目一：2D 平台跳跃游戏</h1>
+    
+    <blockquote>
+      项目概述：创建一个完整的 2D 平台跳跃游戏，包含角色控制、敌人、收集品和多个关卡
+    </blockquote>
+
+    <h2>项目目标</h2>
+    <ul>
+      <li>掌握 CharacterBody2D 的使用</li>
+      <li>理解平台跳跃游戏的物理处理</li>
+      <li>学习敌人 AI 的基本实现</li>
+      <li>实践关卡设计原则</li>
+      <li>完成一个可玩的游戏原型</li>
+    </ul>
+
+    <h2>技术栈</h2>
+    <ul>
+      <li><strong>Godot 4.x</strong> - 游戏引擎</li>
+      <li><strong>C#</strong> - 脚本语言</li>
+      <li><strong>CharacterBody2D</strong> - 角色控制器</li>
+      <li><strong>AnimationPlayer</strong> - 角色动画</li>
+      <li><strong>TileMap</strong> - 关卡设计</li>
+      <li><strong>Area2D</strong> - 收集品与触发器</li>
+    </ul>
+
+    <h2>项目结构</h2>
+    <pre><code>project/
+├── scenes/
+│   ├── player/
+│   │   ├── Player.tscn
+│   │   └── Player.cs
+│   ├── enemies/
+│   │   ├── Slime.tscn
+│   │   └── Slime.cs
+│   ├── items/
+│   │   ├── Coin.tscn
+│   │   └── Coin.cs
+│   └── levels/
+│       ├── Level1.tscn
+│       └── Level2.tscn
+├── scripts/
+│   ├── GameManager.cs
+│   └── AudioManager.cs
+├── assets/
+│   ├── sprites/
+│   ├── audio/
+│   └── fonts/
+└── resources/
+    └── GameResources.tres</code></pre>
+
+    <h2>第一步：创建玩家角色</h2>
+    <p>创建玩家场景，添加 CharacterBody2D 节点作为根节点：</p>
+
+    <pre><code>// Player.cs
+using Godot;
+using System;
+
+public partial class Player : CharacterBody2D
+{
+    [Export] public float Speed = 300.0f;
+    [Export] public float JumpVelocity = -400.0f;
+    
+    private int _jumps = 0;
+    [Export] public int MaxJumps = 2;
+    
+    private Sprite2D _sprite;
+    private AnimationPlayer _animPlayer;
+    
+    public int Coins { get; set; } = 0;
+    
+    public override void _Ready()
+    {
+        _sprite = GetNode<Sprite2D>("Sprite2D");
+        _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+    }
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        // 应用重力
+        if (!IsOnFloor())
+        {
+            Velocity += new Vector2(0, (float)ProjectSettings.GetSetting("physics/2d/default_gravity")) * (float)delta;
+        }
+        
+        // 处理跳跃
+        if (Input.IsActionJustPressed("ui_accept") && CanJump())
+        {
+            Velocity = new Vector2(Velocity.X, JumpVelocity);
+            _jumps++;
+            _animPlayer.Play("jump");
+        }
+        
+        // 处理水平移动
+        float direction = Input.GetAxis("ui_left", "ui_right");
+        if (direction != 0)
+        {
+            Velocity = new Vector2(direction * Speed, Velocity.Y);
+            _sprite.FlipH = direction < 0;
+            
+            if (IsOnFloor())
+            {
+                _animPlayer.Play("run");
+            }
+        }
+        else if (IsOnFloor())
+        {
+            Velocity = new Vector2(0, Velocity.Y);
+            _animPlayer.Play("idle");
+        }
+        
+        MoveAndSlide();
+    }
+    
+    private bool CanJump()
+    {
+        return IsOnFloor() || _jumps < MaxJumps;
+    }
+    
+    public void OnCoinCollected()
+    {
+        Coins++;
+        GD.Print($"收集了金币！当前金币数：{Coins}");
+    }
+    
+    public void ResetJumps()
+    {
+        _jumps = 0;
+    }
+}</code></pre>
+
+    <h2>第二步：创建敌人 AI</h2>
+    <p>创建简单的巡逻敌人：</p>
+
+    <pre><code>// Slime.cs
+using Godot;
+using System;
+
+public partial class Slime : CharacterBody2D
+{
+    [Export] public float Speed = 100.0f;
+    [Export] public float PatrolDistance = 100.0f;
+    
+    private Vector2 _startPosition;
+    private int _direction = 1;
+    private AnimatedSprite2D _sprite;
+    
+    public override void _Ready()
+    {
+        _startPosition = Position;
+        _sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+    }
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        // 巡逻逻辑
+        float distanceFromStart = Position.X - _startPosition.X;
+        
+        if (Math.Abs(distanceFromStart) > PatrolDistance)
+        {
+            _direction *= -1;
+            _sprite.FlipH = _direction < 0;
+        }
+        
+        Velocity = new Vector2(_direction * Speed, Velocity.Y);
+        
+        // 应用重力
+        if (!IsOnFloor())
+        {
+            Velocity += new Vector2(0, (float)ProjectSettings.GetSetting("physics/2d/default_gravity")) * (float)delta;
+        }
+        
+        MoveAndSlide();
+    }
+    
+    private void _on_player_detected(Player player)
+    {
+        // 检测到玩家时的逻辑
+        GD.Print("发现玩家！");
+    }
+}</code></pre>
+
+    <h2>第三步：创建收集品</h2>
+    <pre><code>// Coin.cs
+using Godot;
+using System;
+
+public partial class Coin : Area2D
+{
+    [Signal]
+    public delegate void CollectedEventHandler();
+    
+    private AnimationPlayer _animPlayer;
+    
+    public override void _Ready()
+    {
+        _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        _animPlayer.Play("spin");
+        
+        Connect("body_entered", OnBodyEntered);
+    }
+    
+    private void OnBodyEntered(Node2D body)
+    {
+        if (body is Player player)
+        {
+            player.OnCoinCollected();
+            EmitSignal(SignalName.Collected);
+            
+            // 播放收集动画
+            _animPlayer.Play("collect");
+            
+            // 延迟后删除
+            var timer = GetTree().CreateTimer(0.3f);
+            timer.Timeout += () => QueueFree();
+        }
+    }
+}</code></pre>
+
+    <h2>第四步：游戏管理器</h2>
+    <pre><code>// GameManager.cs
+using Godot;
+using System;
+
+public partial class GameManager : Node
+{
+    public static GameManager Instance { get; private set; }
+    
+    public int TotalCoins { get; set; } = 0;
+    public int CurrentLevel { get; set; } = 1;
+    
+    public override void _Ready()
+    {
+        if (Instance != null && Instance != this)
+        {
+            QueueFree();
+            return;
+        }
+        
+        Instance = this;
+        DontDestroyOnLoad(this);
+    }
+    
+    public void AddCoin()
+    {
+        TotalCoins++;
+    }
+    
+    public void LoadLevel(int levelNumber)
+    {
+        CurrentLevel = levelNumber;
+        GetTree().ChangeSceneToFile($"res://scenes/levels/Level{levelNumber}.tscn");
+    }
+    
+    public void RestartLevel()
+    {
+        GetTree().ReloadCurrentScene();
+    }
+}</code></pre>
+
+    <h2>第五步：输入配置</h2>
+    <p>在项目设置中配置输入映射：</p>
+    <ul>
+      <li><code>ui_left</code> - A 或 Left Arrow</li>
+      <li><code>ui_right</code> - D 或 Right Arrow</li>
+      <li><code>ui_accept</code> - Space 或 W 或 Up Arrow（跳跃）</li>
+    </ul>
+
+    <h2>扩展挑战</h2>
+    <p>完成基础版本后，尝试添加以下功能：</p>
+    <ul>
+      <li>✓ 添加二段跳能力</li>
+      <li>✓ 实现冲刺机制</li>
+      <li>✓ 添加移动平台</li>
+      <li>✓ 创建 Boss 战</li>
+      <li>✓ 实现关卡选择界面</li>
+      <li>✓ 添加成就系统</li>
+    </ul>
+
+    <div class="bg-gray-800 border-l-4 border-green-500 p-4 mt-8">
+      <p class="font-semibold text-green-400">项目资源</p>
+      <p>完整源代码可在 GitHub 仓库获取，包含所有素材和多个关卡示例。</p>
+    </div>
+  </article>
+</Layout>
