@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实战项目 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="projects.html" class="bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-4 text-green-400">🎯 实战项目</h1>
+            <p class="text-xl text-gray-300">通过完整的项目实战，巩固所学知识，积累开发经验</p>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Project 1 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-green-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-green-400">2D 平台跳跃游戏</h2>
+                        <p class="text-gray-400 mb-3">完整的 2D 平台跳跃游戏，包含角色控制、敌人 AI、收集品、关卡设计、死亡与重生系统。</p>
+                        <div class="flex gap-4 text-sm text-gray-500 mb-3">
+                            <span>⏱️ 8-10 小时</span>
+                            <span>📊 难度：⭐⭐⭐</span>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">CharacterBody2D</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Animation</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">TileMap</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Audio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-green-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-green-400">3D 第一人称探索</h2>
+                        <p class="text-gray-400 mb-3">3D 第一人称视角游戏，包含角色控制器、相机系统、交互系统、环境探索、简单的谜题设计。</p>
+                        <div class="flex gap-4 text-sm text-gray-500 mb-3">
+                            <span>⏱️ 10-12 小时</span>
+                            <span>📊 难度：⭐⭐⭐⭐</span>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">CharacterBody3D</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Camera3D</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">RayCast</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Lighting</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-green-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-green-400">回合制战斗系统</h2>
+                        <p class="text-gray-400 mb-3">完整的回合制战斗系统，包含角色属性、技能系统、战斗 UI、敌人 AI、战斗流程管理。</p>
+                        <div class="flex gap-4 text-sm text-gray-500 mb-3">
+                            <span>⏱️ 6-8 小时</span>
+                            <span>📊 难度：⭐⭐⭐</span>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">State Machine</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">UI System</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Data Management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-green-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">4</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-green-400">完整 UI 系统实现</h2>
+                        <p class="text-gray-400 mb-3">专业的游戏 UI 系统，包含主菜单、设置界面、背包系统、对话框、HUD、UI 动画与过渡。</p>
+                        <div class="flex gap-4 text-sm text-gray-500 mb-3">
+                            <span>⏱️ 8-10 小时</span>
+                            <span>📊 难度：⭐⭐⭐⭐</span>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Control Nodes</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Themes</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Animation</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Localization</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-green-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">5</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-green-400">存档与数据管理系统</h2>
+                        <p class="text-gray-400 mb-3">通用的存档系统实现，包含数据序列化、多存档位、自动保存、数据迁移、加密存储。</p>
+                        <div class="flex gap-4 text-sm text-gray-500 mb-3">
+                            <span>⏱️ 4-6 小时</span>
+                            <span>📊 难度：⭐⭐⭐</span>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Serialization</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">File I/O</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Encryption</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-green-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">6</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-green-400">多人游戏演示</h2>
+                        <p class="text-gray-400 mb-3">简单的多人游戏示例，包含网络连接、玩家同步、房间系统、聊天功能、基础游戏逻辑。</p>
+                        <div class="flex gap-4 text-sm text-gray-500 mb-3">
+                            <span>⏱️ 12-15 小时</span>
+                            <span>📊 难度：⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Multiplayer</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">RPC</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Networking</span>
+                            <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Sync</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 bg-gradient-to-r from-green-900 to-blue-900 rounded-lg p-8 border border-green-700">
+            <h2 class="text-2xl font-bold mb-6">💡 项目学习建议</h2>
+            <div class="grid md:grid-cols-2 gap-6 text-gray-300">
+                <div>
+                    <h4 class="font-semibold text-white mb-2">📌 按顺序学习</h4>
+                    <p>建议按照难度递进的顺序完成项目，每个项目都建立在前置知识之上。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">🔧 先模仿再创新</h4>
+                    <p>先完整实现教程内容，然后尝试添加自己的功能和改进。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">📝 记录问题</h4>
+                    <p>遇到问题时记录解决方案，建立自己的知识库。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">🎮 完成比完美重要</h4>
+                    <p>先做出可玩的版本，再逐步完善。不要陷入过度优化的陷阱。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/niuniu/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

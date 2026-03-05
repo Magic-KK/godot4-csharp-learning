@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进阶内容 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="advanced.html" class="bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-4 text-purple-400">🚀 进阶内容</h1>
+            <p class="text-xl text-gray-300">深入理解 Godot 4 的高级特性和最佳实践</p>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Topic 1 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-purple-400">信号（Signal）系统详解</h2>
+                        <p class="text-gray-400 mb-3">深入理解 Godot 的信号机制：内置信号、自定义信号、信号连接方式、信号组、高级信号模式。</p>
+                        <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">核心概念 · 60 分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-purple-400">资源（Resource）管理</h2>
+                        <p class="text-gray-400 mb-3">学习 Resource 类、自定义资源、资源预加载与动态加载、资源队列管理、内存优化。</p>
+                        <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">核心概念 · 50 分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-purple-400">高级动画系统</h2>
+                        <p class="text-gray-400 mb-3">AnimationPlayer 深度使用、AnimationTree、状态机、混合树、程序化动画、C# 控制动画。</p>
+                        <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">动画 · 70 分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">4</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-purple-400">物理系统深入</h2>
+                        <p class="text-gray-400 mb-3">刚体物理、碰撞层与掩码、射线检测、区域检测、物理材质、性能优化技巧。</p>
+                        <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">物理 · 60 分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">5</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-purple-400">设计模式在 Godot 中的应用</h2>
+                        <p class="text-gray-400 mb-3">单例模式、状态模式、观察者模式、组件模式、对象池、事件总线等常用模式的 Godot 实现。</p>
+                        <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">架构 · 90 分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">6</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-purple-400">性能优化技巧</h2>
+                        <p class="text-gray-400 mb-3">性能分析工具、内存管理、对象池、批处理、LOD、异步加载、多线程注意事项。</p>
+                        <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">优化 · 80 分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">7</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-purple-400">编辑器插件开发</h2>
+                        <p class="text-gray-400 mb-3">创建自定义编辑器插件、扩展检查器、自定义资源导入器、编辑器界面定制。</p>
+                        <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">工具 · 100 分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">8</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-purple-400">网络与多人游戏</h2>
+                        <p class="text-gray-400 mb-3">Godot 网络架构、MultiplayerAPI、RPC 调用、状态同步、延迟补偿、权威服务器模式。</p>
+                        <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">网络 · 120 分钟</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="projects.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                学完进阶内容，开始实战项目 →
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/niuniu/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

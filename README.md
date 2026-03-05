@@ -36,37 +36,33 @@
 
 ## 🛠️ 技术栈
 
-- **Astro 5.x** - 现代静态站点生成器
-- **TailwindCSS 4.x** - 实用优先的 CSS 框架
-- **TypeScript** - 类型安全的 JavaScript 超集
+- **HTML5** - 语义化标记
+- **TailwindCSS** - 通过 CDN 引入的实用优先 CSS 框架
+- **纯静态** - 无需构建，直接部署到 GitHub Pages
 
 ## 🚀 本地开发
 
 ```bash
-# 安装依赖
-npm install
+# 安装 http-server（可选）
+npm install -g http-server
 
-# 启动开发服务器
+# 启动本地服务器
 npm run dev
 
-# 构建生产版本
-npm run build
-
-# 预览生产版本
-npm run preview
+# 或直接打开 index.html
+open index.html
 ```
 
 ## 📦 部署
 
-本网站部署在 GitHub Pages：
+本网站部署在 GitHub Pages，无需构建步骤：
 
 ```bash
-# 构建
-npm run build
-
-# 推送 dist 目录到 gh-pages 分支
-npx gh-pages -d dist
+# 直接推送 main 分支即可
+git push origin main
 ```
+
+GitHub Actions 会自动部署到 GitHub Pages。
 
 ## 📝 知识体系大纲
 
@@ -122,4 +118,4 @@ MIT License
 
 ---
 
-**Created with ❤️ using Astro + TailwindCSS**
+**Created with ❤️ for Godot 4 C# learners**

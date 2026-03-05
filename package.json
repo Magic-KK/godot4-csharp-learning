@@ -2,15 +2,10 @@
   "name": "godot4-csharp-learning",
   "version": "1.0.0",
   "description": "Godot 4 C# 学习网站 - 从入门到精通",
-  "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "dev": "npx http-server . -p 4321 -o"
   },
-  "dependencies": {
-    "astro": "^5.0.0",
-    "@astrojs/tailwind": "^6.0.0",
-    "tailwindcss": "^4.0.0"
-  }
+  "keywords": ["godot", "csharp", "tutorial", "game-development"],
+  "author": "niuniu",
+  "license": "MIT"
 }

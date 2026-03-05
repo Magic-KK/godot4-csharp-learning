@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godot 4 C# 学习 - 从入门到精通</title>
+    <meta name="description" content="Godot 4 C# 完整学习教程，从零基础到精通">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover:hover { transform: translateY(-4px); transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">🎮 Godot 4 C# 完全学习指南</h1>
+            <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-8">
+                从零基础到精通，掌握 Godot Engine 4.x 的 C# 脚本开发
+            </p>
+            <p class="text-lg text-blue-200 mb-12">2025-2026 最新知识体系 · 实战驱动学习</p>
+            <div class="flex justify-center gap-4">
+                <a href="basics.html" class="bg-white text-purple-700 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">开始学习</a>
+                <a href="projects.html" class="bg-transparent border-2 border-white text-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-purple-700 transition-colors">查看项目</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
+                    <div class="text-4xl mb-4">📚</div>
+                    <h3 class="text-xl font-semibold mb-3 text-blue-400">基础教程</h3>
+                    <p class="text-gray-400 mb-4">从零开始学习 Godot 4 编辑器、C# 基础、节点系统、场景管理</p>
+                    <a href="basics.html" class="text-blue-400 hover:underline">开始学习 →</a>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-xl font-semibold mb-3 text-blue-400">进阶内容</h3>
+                    <p class="text-gray-400 mb-4">深入理解信号系统、资源管理、性能优化、高级设计模式</p>
+                    <a href="advanced.html" class="text-blue-400 hover:underline">深入学习 →</a>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-xl font-semibold mb-3 text-blue-400">实战项目</h3>
+                    <p class="text-gray-400 mb-4">通过完整项目实战：2D 平台跳跃、3D 冒险、UI 系统等</p>
+                    <a href="projects.html" class="text-blue-400 hover:underline">查看项目 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Knowledge Outline -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-8 text-center text-blue-400">📋 知识体系大纲</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400">第一阶段：基础入门</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>✓ Godot 4 编辑器界面与工作流程</li>
+                        <li>✓ C# 语言基础回顾</li>
+                        <li>✓ 节点与场景系统</li>
+                        <li>✓ 内置类型与 Godot API</li>
+                        <li>✓ 输入处理与用户交互</li>
+                        <li>✓ 2D 游戏开发基础</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400">第二阶段：核心技能</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>✓ 信号（Signal）系统详解</li>
+                        <li>✓ 资源（Resource）管理</li>
+                        <li>✓ 动画系统（AnimationPlayer）</li>
+                        <li>✓ 物理系统与碰撞检测</li>
+                        <li>✓ UI 界面设计与控制</li>
+                        <li>✓ 音频系统</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400">第三阶段：进阶提升</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>✓ 设计模式在 Godot 中的应用</li>
+                        <li>✓ 性能优化技巧</li>
+                        <li>✓ 自定义资源与编辑器插件</li>
+                        <li>✓ 网络与多人游戏</li>
+                        <li>✓ 着色器基础</li>
+                        <li>✓ 跨平台发布</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400">第四阶段：实战项目</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>✓ 2D 平台跳跃游戏</li>
+                        <li>✓ 3D 第一人称探索</li>
+                        <li>✓ 回合制战斗系统</li>
+                        <li>✓ 完整 UI 系统实现</li>
+                        <li>✓ 存档与数据管理</li>
+                        <li>✓ 发布到多平台</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Tips -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="gradient-bg rounded-lg p-8">
+                <h2 class="text-2xl font-bold mb-6">🎓 学习建议</h2>
+                <div class="grid md:grid-cols-3 gap-6 text-gray-100">
+                    <div>
+                        <h4 class="font-semibold mb-2">💡 循序渐进</h4>
+                        <p>按照知识体系顺序学习，不要跳级。每个阶段都有前置知识依赖。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2">🔧 动手实践</h4>
+                        <p>看完教程立即动手做。代码要自己敲，不要复制粘贴。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2">📝 记录笔记</h4>
+                        <p>建立自己的知识库，记录遇到的问题和解决方案。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/niuniu/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

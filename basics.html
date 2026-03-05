@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基础教程 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-4 text-blue-400">📚 基础教程</h1>
+            <p class="text-xl text-gray-300">从零开始，系统学习 Godot 4 C# 开发的基础知识</p>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Lesson 1 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-blue-400">Godot 4 编辑器入门</h2>
+                        <p class="text-gray-400 mb-3">熟悉 Godot 4 的界面布局、项目面板、场景面板、检查器、文件系统。了解工作区切换和常用快捷键。</p>
+                        <div class="flex gap-4 text-sm text-gray-500">
+                            <span>⏱️ 30 分钟</span>
+                            <span>📝 实践：创建第一个项目</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 2 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-blue-400">C# 语言基础回顾</h2>
+                        <p class="text-gray-400 mb-3">快速回顾 C# 核心概念：类、继承、接口、泛型、LINQ、异步编程。Godot C# 的特殊要求。</p>
+                        <div class="flex gap-4 text-sm text-gray-500">
+                            <span>⏱️ 45 分钟</span>
+                            <span>📝 实践：编写基础类</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 3 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-blue-400">节点与场景系统</h2>
+                        <p class="text-gray-400 mb-3">深入理解 Godot 的核心：节点树、场景实例化、场景切换、节点生命周期（_Ready、_Process、_PhysicsProcess）。</p>
+                        <div class="flex gap-4 text-sm text-gray-500">
+                            <span>⏱️ 60 分钟</span>
+                            <span>📝 实践：创建场景层次结构</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 4 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">4</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-blue-400">Godot 内置类型</h2>
+                        <p class="text-gray-400 mb-3">学习 Godot 特有的类型：Vector2、Vector3、Color、Rect2、Transform2D、Transform3D、Quaternion 等。</p>
+                        <div class="flex gap-4 text-sm text-gray-500">
+                            <span>⏱️ 45 分钟</span>
+                            <span>📝 实践：类型操作练习</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 5 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">5</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-blue-400">输入处理系统</h2>
+                        <p class="text-gray-400 mb-3">配置输入映射、处理键盘鼠标输入、游戏手柄支持、触摸输入、Input 类的使用方法。</p>
+                        <div class="flex gap-4 text-sm text-gray-500">
+                            <span>⏱️ 40 分钟</span>
+                            <span>📝 实践：创建角色控制器</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 6 -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">6</div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2 text-blue-400">2D 游戏开发基础</h2>
+                        <p class="text-gray-400 mb-3">Sprite2D、TextureRect、Camera2D、TileMap、ParallaxBackground。创建简单的 2D 场景。</p>
+                        <div class="flex gap-4 text-sm text-gray-500">
+                            <span>⏱️ 60 分钟</span>
+                            <span>📝 实践：2D 角色移动</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="advanced.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                完成基础后，进入进阶内容 →
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/niuniu/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
