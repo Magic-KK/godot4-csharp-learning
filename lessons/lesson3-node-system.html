@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 3 课：节点与场景系统 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="../index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="../index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="../advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="../projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-700" aria-label="菜单">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="nav-menu md:hidden">
+                <a href="../index.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                <a href="basics.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                <a href="../advanced.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                <a href="../projects.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Lesson Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl">3</span>
+                <div>
+                    <h1 class="text-4xl font-bold text-blue-400">节点与场景系统</h1>
+                    <p class="text-gray-400 mt-2">⏱️ 预计时间：60 分钟 · 难度：⭐⭐</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-blue-400">🎯 学习目标</h2>
+            <ul class="space-y-2 text-gray-300">
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>深入理解 Godot 的节点树结构</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>掌握场景的创建、保存和实例化</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>理解节点生命周期和方法调用顺序</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>学会使用 GetNode 和 GetParent 访问节点</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 1 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 1. 节点树结构</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <p class="text-gray-300 mb-4">
+                    Godot 的核心是<strong>节点树</strong>（Scene Tree）。一切皆是节点（Node），节点可以包含子节点，形成树状结构。
+                </p>
+                
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700 mb-4">
+                    <h3 class="font-semibold text-yellow-400 mb-3">示例：一个简单游戏的节点树</h3>
+                    <pre class="text-gray-300 font-mono text-sm overflow-x-auto">
+Main (Node)
+├── WorldEnvironment
+├── Player (CharacterBody2D)
+│   ├── Sprite2D
+│   ├── CollisionShape2D
+│   └── Camera2D
+├── Enemy (CharacterBody2D)
+│   ├── Sprite2D
+│   └── CollisionShape2D
+├── UI (Control)
+│   ├── HealthBar
+│   └── ScoreLabel
+└── AudioManager (AudioStreamPlayer)</pre>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">🌳 节点树的优势</h4>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• 清晰的层级结构</li>
+                            <li>• 组件化设计</li>
+                            <li>• 易于复用和维护</li>
+                            <li>• 父子节点自动关联</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                        <h4 class="font-semibold text-green-400 mb-2">💡 最佳实践</h4>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• 保持节点命名清晰</li>
+                            <li>• 合理使用节点分组</li>
+                            <li>• 避免过深的嵌套</li>
+                            <li>• 使用场景实例化复用</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 2. 场景的创建与实例化</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">创建场景</h3>
+                <p class="text-gray-300 mb-4">在 Godot 中，场景是一个保存的节点树。每个场景都有一个根节点。</p>
+                
+                <div class="space-y-4">
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-green-400 mb-2">方法 1：编辑器中创建</h4>
+                        <ol class="text-gray-400 text-sm space-y-1">
+                            <li>1. 点击场景面板的「新建场景」按钮</li>
+                            <li>2. 选择根节点类型（Node2D、Node3D、Control 等）</li>
+                            <li>3. 添加子节点并配置属性</li>
+                            <li>4. 按 Ctrl+S 保存场景（.tscn 文件）</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">方法 2：代码中动态创建</h4>
+                        <div class="code-block">
+                            <code class="language-csharp">// 创建节点
+var player = new CharacterBody2D();
+var sprite = new Sprite2D();
+var collision = new CollisionShape2D();
+
+// 建立层级关系
+player.AddChild(sprite);
+player.AddChild(collision);
+
+// 添加到场景树
+AddChild(player);</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">场景实例化</h3>
+                <p class="text-gray-300 mb-4">实例化允许你在场景中复用另一个场景：</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">public partial class Game : Node2D
+{
+    [Export] public PackedScene EnemyScene { get; set; }
+    
+    private void SpawnEnemy(Vector2 position)
+    {
+        // 实例化场景
+        var enemy = EnemyScene.Instantiate<CharacterBody2D>();
+        enemy.Position = position;
+        AddChild(enemy);
+    }
+}</code>
+                </div>
+                
+                <div class="p-4 bg-yellow-900/30 rounded-lg border border-yellow-700">
+                    <h4 class="font-semibold text-yellow-400 mb-2">⚠️ 注意事项</h4>
+                    <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• 使用 [Export] 让场景资源在编辑器中可分配</li>
+                        <li>• Instantiate&lt;T&gt;() 指定返回类型</li>
+                        <li>• 实例化后需要 AddChild() 添加到场景树</li>
+                        <li>• 记得在不需要时调用 QueueFree() 释放</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 3. 节点访问方法</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="pb-3 text-blue-400 font-semibold">方法</th>
+                                <th class="pb-3 text-blue-400 font-semibold">说明</th>
+                                <th class="pb-3 text-blue-400 font-semibold">示例</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-300">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">GetNode&lt;T&gt;()</td>
+                                <td class="py-3">获取子节点</td>
+                                <td class="py-3 font-mono text-xs">GetNode&lt;Sprite2D&gt;("Player/Sprite")</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">GetParent&lt;T&gt;()</td>
+                                <td class="py-3">获取父节点</td>
+                                <td class="py-3 font-mono text-xs">GetParent&lt;Node2D&gt;()</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">GetNodeOrNull&lt;T&gt;()</td>
+                                <td class="py-3">安全获取（可能为 null）</td>
+                                <td class="py-3 font-mono text-xs">GetNodeOrNull&lt;AudioStreamPlayer&gt;("SFX")</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">HasNode()</td>
+                                <td class="py-3">检查节点是否存在</td>
+                                <td class="py-3 font-mono text-xs">HasNode("Player")</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">FindChild()</td>
+                                <td class="py-3">递归查找子节点</td>
+                                <td class="py-3 font-mono text-xs">FindChild("Target", true, false)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">路径语法</h3>
+                
+                <div class="space-y-3 text-gray-300">
+                    <div class="p-3 bg-gray-900 rounded-lg">
+                        <code class="text-blue-400">"Player"</code>
+                        <span class="text-gray-500 ml-3">- 直接子节点</span>
+                    </div>
+                    <div class="p-3 bg-gray-900 rounded-lg">
+                        <code class="text-blue-400">"Player/Sprite2D"</code>
+                        <span class="text-gray-500 ml-3">- 后代节点（使用 / 分隔）</span>
+                    </div>
+                    <div class="p-3 bg-gray-900 rounded-lg">
+                        <code class="text-blue-400">"../Enemy"</code>
+                        <span class="text-gray-500 ml-3">- 兄弟节点（.. 表示父节点）</span>
+                    </div>
+                    <div class="p-3 bg-gray-900 rounded-lg">
+                        <code class="text-blue-400">"/root/Game/Player"</code>
+                        <span class="text-gray-500 ml-3">- 绝对路径（从根节点开始）</span>
+                    </div>
+                    <div class="p-3 bg-gray-900 rounded-lg">
+                        <code class="text-blue-400">"~"</code>
+                        <span class="text-gray-500 ml-3">- 当前节点</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 4. 节点生命周期</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <p class="text-gray-300 mb-4">Godot 节点按特定顺序调用生命周期方法：</p>
+                
+                <div class="relative">
+                    <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-red-500"></div>
+                    
+                    <div class="space-y-6">
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 w-5 h-5 bg-blue-500 rounded-full border-4 border-gray-800"></div>
+                            <h4 class="font-semibold text-blue-400">_EnterTree()</h4>
+                            <p class="text-gray-400 text-sm">节点进入场景树时调用</p>
+                        </div>
+                        
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 w-5 h-5 bg-blue-500 rounded-full border-4 border-gray-800"></div>
+                            <h4 class="font-semibold text-blue-400">_Ready()</h4>
+                            <p class="text-gray-400 text-sm">节点及其子节点都准备好后调用（只一次）</p>
+                        </div>
+                        
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 w-5 h-5 bg-purple-500 rounded-full border-4 border-gray-800"></div>
+                            <h4 class="font-semibold text-purple-400">_Process(delta)</h4>
+                            <p class="text-gray-400 text-sm">每帧调用（渲染帧）</p>
+                        </div>
+                        
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 w-5 h-5 bg-purple-500 rounded-full border-4 border-gray-800"></div>
+                            <h4 class="font-semibold text-purple-400">_PhysicsProcess(delta)</h4>
+                            <p class="text-gray-400 text-sm">固定间隔调用（物理帧，默认 60Hz）</p>
+                        </div>
+                        
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 w-5 h-5 bg-red-500 rounded-full border-4 border-gray-800"></div>
+                            <h4 class="font-semibold text-red-400">_ExitTree()</h4>
+                            <p class="text-gray-400 text-sm">节点离开场景树时调用</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-green-400">📝 实践练习：创建场景层次结构</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-green-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习目标</h3>
+                <p class="text-gray-300 mb-6">创建一个完整的游戏场景，包含玩家、敌人和 UI。</p>
+                
+                <h3 class="text-lg font-semibold mb-4 text-green-400">步骤指南</h3>
+                <ol class="space-y-4 text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                        <span>创建主场景 Main.tscn，根节点为 Node2D</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                        <span>创建玩家场景 Player.tscn（CharacterBody2D + Sprite + CollisionShape）</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                        <span>将 Player 场景实例化到 Main 场景中</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                        <span>创建 UI 场景（Control 节点 + Label）</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                        <span>在代码中使用 GetNode 访问子节点</span>
+                    </li>
+                </ol>
+                
+                <div class="mt-6 p-4 bg-gray-900 rounded-lg border border-gray-700">
+                    <h4 class="font-semibold text-yellow-400 mb-2">💡 提示</h4>
+                    <p class="text-gray-400 text-sm">使用场景面板的「+」按钮快速添加节点，按 F1 查看节点文档。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center pt-8 border-t border-gray-700">
+            <a href="lesson2-csharp-basics.html" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                ← 上一课：C# 语言基础回顾
+            </a>
+            <a href="lesson4-godot-types.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
+                下一课：Godot 内置类型 →
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/Magic-KK/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="../js/theme.js"></script>
+</body>
+</html>
