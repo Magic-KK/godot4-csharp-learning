@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 6 课：2D 游戏开发基础 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="../index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="../index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="../advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="../projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-700" aria-label="菜单">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="nav-menu md:hidden">
+                <a href="../index.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                <a href="basics.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                <a href="../advanced.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                <a href="../projects.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Lesson Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl">6</span>
+                <div>
+                    <h1 class="text-4xl font-bold text-blue-400">2D 游戏开发基础</h1>
+                    <p class="text-gray-400 mt-2">⏱️ 预计时间：60 分钟 · 难度：⭐⭐⭐</p>
+                </div>
+            </div>
+            <div class="p-4 bg-green-900/30 rounded-lg border border-green-700">
+                <p class="text-green-300">🎉 恭喜完成基础教程系列！本课将整合前面所学知识，创建完整的 2D 游戏场景。</p>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-blue-400">🎯 学习目标</h2>
+            <ul class="space-y-2 text-gray-300">
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>掌握 Sprite2D、TextureRect 等 2D 节点</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>理解 TileMap 地图系统</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>学会使用 Camera2D 跟随玩家</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>实现碰撞检测与物理交互</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>创建完整的 2D 游戏场景</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 1 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 1. 2D 精灵与纹理</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">Sprite2D - 2D 精灵</h3>
+                <p class="text-gray-300 mb-4">用于显示 2D 图像，是最常用的 2D 节点。</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 在编辑器中设置纹理
+[Export] public Texture2D PlayerTexture { get; set; }
+
+public override void _Ready()
+{
+    var sprite = GetNode<Sprite2D>("Sprite2D");
+    sprite.Texture = PlayerTexture;
+    
+    // 常用属性
+    sprite.FlipH = true;           // 水平翻转
+    sprite.FlipV = true;           // 垂直翻转
+    sprite.Modulate = Colors.Red;  // 颜色调制
+    sprite.Visible = true;         // 可见性
+}</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">AnimatedSprite2D - 动画精灵</h3>
+                <p class="text-gray-300 mb-4">用于播放精灵动画，需要 SpriteFrames 资源。</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">public partial class Player : CharacterBody2D
+{
+    private AnimatedSprite2D _animatedSprite;
+    
+    public override void _Ready()
+    {
+        _animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+    }
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        Vector2 direction = new Vector2(
+            Input.GetAxis("left", "right"),
+            Input.GetAxis("up", "down")
+        );
+        
+        if (direction.LengthSquared() > 0)
+        {
+            direction = direction.Normalized();
+            _animatedSprite.Play("walk");
+            
+            // 根据方向翻转
+            if (direction.X < 0)
+                _animatedSprite.FlipH = true;
+            else if (direction.X > 0)
+                _animatedSprite.FlipH = false;
+        }
+        else
+        {
+            _animatedSprite.Play("idle");
+        }
+    }
+}</code>
+                </div>
+                
+                <div class="p-4 bg-yellow-900/30 rounded-lg border border-yellow-700">
+                    <h4 class="font-semibold text-yellow-400 mb-2">⚙️ 创建动画步骤</h4>
+                    <ol class="text-gray-300 text-sm space-y-1">
+                        <li>1. 选中 AnimatedSprite2D 节点</li>
+                        <li>2. 在检查器中点击「新建 SpriteFrames」</li>
+                        <li>3. 点击「SpriteFrames」面板</li>
+                        <li>4. 拖拽图片到动画帧区域</li>
+                        <li>5. 设置 FPS 和循环选项</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">TextureRect - 纹理矩形</h3>
+                <p class="text-gray-300 mb-4">用于 UI 中的图片显示，支持拉伸模式。</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 常用拉伸模式
+var textureRect = GetNode<TextureRect>("TextureRect");
+textureRect.StretchMode = TextureRect.StretchModeEnum.KeepAspect;
+// 其他模式：Scale、Keep、KeepCover、KeepCentered
+
+// 设置纹理
+textureRect.Texture = someTexture;
+textureRect.ExpandMode = TextureRect.ExpandModeEnum.ExpandToFit;</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 2. TileMap 地图系统</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">什么是 TileMap？</h3>
+                <p class="text-gray-300 mb-4">
+                    TileMap 是一种高效的 2D 地图系统，使用小图块（Tile）拼接成大地图。
+                    适用于平台游戏、RPG、策略游戏等。
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">✅ 优势</h4>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• 内存效率高</li>
+                            <li>• 绘制性能好</li>
+                            <li>• 易于编辑和修改</li>
+                            <li>• 支持自动平铺</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-green-400 mb-2">🎮 适用场景</h4>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• 平台跳跃游戏地面</li>
+                            <li>• RPG 世界地图</li>
+                            <li>• 策略游戏地形</li>
+                            <li>• 迷宫/地牢生成</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">配置 TileMap</h3>
+                
+                <div class="space-y-4">
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-yellow-400 mb-2">步骤 1：创建 TileSet</h4>
+                        <ol class="text-gray-300 text-sm space-y-1">
+                            <li>1. 选中 TileMap 节点</li>
+                            <li>2. 在检查器中点击「新建 TileSet」</li>
+                            <li>3. 点击 TileSet 属性旁的箭头进入编辑</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">步骤 2：添加图块纹理</h4>
+                        <ol class="text-gray-300 text-sm space-y-1">
+                            <li>1. 在底部面板选择「图块集」选项卡</li>
+                            <li>2. 点击「+」添加新图块</li>
+                            <li>3. 拖拽纹理到预览区域</li>
+                            <li>4. 设置图块大小（如 16x16、32x32）</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-purple-400 mb-2">步骤 3：绘制地图</h4>
+                        <ol class="text-gray-300 text-sm space-y-1">
+                            <li>1. 选择 TileMap 节点</li>
+                            <li>2. 点击工具栏的「绘制」工具</li>
+                            <li>3. 在场景中选择图块并绘制</li>
+                            <li>4. 使用不同图层绘制地面、墙壁、装饰</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-orange-400">代码中操作 TileMap</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">public partial class LevelManager : Node2D
+{
+    private TileMap _tileMap;
+    
+    public override void _Ready()
+    {
+        _tileMap = GetNode<TileMap>("TileMap");
+    }
+    
+    // 设置指定位置的图块
+    public void SetTile(Vector2I position, int tileId)
+    {
+        _tileMap.SetCell(0, position, 0, new Vector2I(tileId, 0));
+    }
+    
+    // 清除指定位置的图块
+    public void ClearTile(Vector2I position)
+    {
+        _tileMap.SetCell(0, position, -1);
+    }
+    
+    // 获取指定位置的图块
+    public Vector2I GetTile(Vector2I position)
+    {
+        return _tileMap.GetCellSourceId(0, position);
+    }
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 3. Camera2D 摄像机</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">跟随玩家</h3>
+                <p class="text-gray-300 mb-4">Camera2D 用于控制游戏视图，常用于跟随玩家角色。</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 简单方法：在编辑器中设置
+// 1. 添加 Camera2D 作为 Player 的子节点
+// 2. 勾选「当前」(Current) 属性
+// 3. 摄像机自动跟随玩家移动</code>
+                </div>
+                
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">代码控制摄像机</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">public partial class GameCamera : Camera2D
+{
+    [Export] public Node2D Target { get; set; }
+    [Export] public float SmoothSpeed { get; set; } = 5f;
+    [Export] public Vector2 Offset { get; set; } = Vector2.Zero;
+    
+    private Vector2 _velocity;
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        if (Target == null) return;
+        
+        // 平滑跟随
+        Vector2 targetPosition = Target.Position + Offset;
+        Position = Position.Lerp(targetPosition, (float)delta * SmoothSpeed);
+        
+        // 或者使用插值
+        // Position = Position.InterpolateWith(targetPosition, (float)delta * SmoothSpeed);
+    }
+}</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">摄像机属性</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="pb-3 text-blue-400 font-semibold">属性</th>
+                                <th class="pb-3 text-blue-400 font-semibold">说明</th>
+                                <th class="pb-3 text-blue-400 font-semibold">示例值</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-300">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3">当前 (Current)</td>
+                                <td class="py-3">是否为活动摄像机</td>
+                                <td class="py-3 font-mono">true</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3">缩放 (Zoom)</td>
+                                <td class="py-3">摄像机缩放倍率</td>
+                                <td class="py-3 font-mono">Vector2(1, 1)</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3">旋转 (Rotation)</td>
+                                <td class="py-3">摄像机旋转角度</td>
+                                <td class="py-3 font-mono">0</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3">限制 (Limit)</td>
+                                <td class="py-3">摄像机移动边界</td>
+                                <td class="py-3 font-mono">Left, Top, Right, Bottom</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3">平滑 (Smooth)</td>
+                                <td class="py-3">启用平滑跟随</td>
+                                <td class="py-3 font-mono">true</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 4. 碰撞检测</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">碰撞形状节点</h3>
+                
+                <div class="space-y-3 text-gray-300">
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">CollisionShape2D</h4>
+                        <p class="text-gray-400 text-sm mb-2">定义碰撞区域形状</p>
+                        <code class="text-xs text-gray-500">支持：Rectangle, Circle, Capsule, Polygon</code>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-green-400 mb-2">CollisionPolygon2D</h4>
+                        <p class="text-gray-400 text-sm mb-2">自定义多边形碰撞</p>
+                        <code class="text-xs text-gray-500">适用于不规则形状</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">碰撞检测信号</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">public partial class Player : CharacterBody2D
+{
+    public override void _Ready()
+    {
+        // 连接碰撞信号
+        var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+        // 注意：信号从 Area2D 或 CharacterBody2D 发出
+    }
+    
+    // CharacterBody2D 的碰撞处理
+    public override void _PhysicsProcess(double delta)
+    {
+        MoveAndSlide();
+        
+        // 检查碰撞
+        for (int i = 0; i < GetSlideCollisionCount(); i++)
+        {
+            var collision = GetSlideCollision(i);
+            var collider = collision.GetCollider();
+            
+            if (collider is Enemy enemy)
+            {
+                TakeDamage(enemy.Damage);
+            }
+        }
+    }
+    
+    private void TakeDamage(int amount)
+    {
+        GD.Print($"Player took {amount} damage!");
+    }
+}</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400">Area2D 检测区域</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">public partial class Pickup : Area2D
+{
+    public override void _Ready()
+    {
+        // 连接信号
+        BodyEntered += OnBodyEntered;
+    }
+    
+    private void OnBodyEntered(Node2D body)
+    {
+        if (body is Player)
+        {
+            // 玩家拾取物品
+            GD.Print("Item collected!");
+            QueueFree(); // 删除物品
+        }
+    }
+}
+
+// 或者在检查器中连接信号
+// area2d → body_entered → 选择处理方法</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-green-400">📝 实践练习：2D 角色移动</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-green-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习目标</h3>
+                <p class="text-gray-300 mb-6">创建一个完整的 2D 平台游戏场景，包含玩家、地图和碰撞。</p>
+                
+                <h3 class="text-lg font-semibold mb-4 text-green-400">步骤指南</h3>
+                <ol class="space-y-4 text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                        <span>创建 TileMap 并绘制游戏地图（地面、平台、墙壁）</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                        <span>创建 Player 场景（CharacterBody2D + AnimatedSprite2D + CollisionShape2D）</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                        <span>添加 Camera2D 作为 Player 子节点，启用跟随</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                        <span>实现玩家移动、跳跃动画</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                        <span>添加收集品（Area2D + 碰撞检测）</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+                        <span>测试运行并调整参数</span>
+                    </li>
+                </ol>
+                
+                <div class="mt-6 p-4 bg-gray-900 rounded-lg border border-gray-700">
+                    <h4 class="font-semibold text-yellow-400 mb-2">💡 提示</h4>
+                    <p class="text-gray-400 text-sm">使用 F6 快速运行当前场景进行测试。按 F5 运行整个项目。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Completion -->
+        <section class="mb-12">
+            <div class="gradient-bg rounded-lg p-8 text-center">
+                <div class="text-6xl mb-4">🎉</div>
+                <h2 class="text-3xl font-bold mb-4">恭喜完成基础教程！</h2>
+                <p class="text-xl text-blue-100 mb-6">
+                    你已经掌握了 Godot 4 C# 开发的核心基础知识。<br/>
+                    接下来可以进入进阶内容或开始实战项目了！
+                </p>
+                <div class="flex justify-center gap-4 flex-wrap">
+                    <a href="../advanced.html" class="bg-white text-purple-700 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+                        进入进阶内容 →
+                    </a>
+                    <a href="../projects.html" class="bg-transparent border-2 border-white text-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-purple-700 transition-colors">
+                        开始实战项目
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center pt-8 border-t border-gray-700">
+            <a href="lesson5-input-system.html" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                ← 上一课：输入处理系统
+            </a>
+            <a href="../advanced.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
+                进入进阶内容 →
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/Magic-KK/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="../js/theme.js"></script>
+</body>
+</html>
