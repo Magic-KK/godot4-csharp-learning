@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 4 课：Godot 内置类型 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="../index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="../index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="../advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="../projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-700" aria-label="菜单">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="nav-menu md:hidden">
+                <a href="../index.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                <a href="basics.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                <a href="../advanced.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                <a href="../projects.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Lesson Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl">4</span>
+                <div>
+                    <h1 class="text-4xl font-bold text-blue-400">Godot 内置类型</h1>
+                    <p class="text-gray-400 mt-2">⏱️ 预计时间：45 分钟 · 难度：⭐⭐</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-blue-400">🎯 学习目标</h2>
+            <ul class="space-y-2 text-gray-300">
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>掌握 Godot 特有的数学类型（Vector2/3、Color 等）</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>理解变换类型（Transform2D/3D、Quaternion）</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>学会使用 Godot 的全局工具类（GD、Mathf）</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>熟悉常用类型的实用方法</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 1 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 1. 向量类型</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">Vector2 - 2D 向量</h3>
+                <p class="text-gray-300 mb-4">用于 2D 位置、方向、速度等。</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 创建向量
+Vector2 position = new Vector2(100, 200);
+Vector2 direction = new Vector2(1, 0);  // 向右
+Vector2 up = Vector2.Up;                 // (0, -1) Godot 中 Y 轴向下为正
+Vector2 zero = Vector2.Zero;             // (0, 0)
+
+// 常用属性
+float x = position.X;
+float y = position.Y;
+float length = position.Length;          // 向量长度
+Vector2 normalized = position.Normalized; // 单位向量
+
+// 常用方法
+Vector2 result = position + direction;    // 向量加法
+float distance = position.DistanceTo(new Vector2(0, 0));
+Vector2 rotated = position.Rotated(Mathf.Pi / 4); // 旋转 45 度
+float dot = position.Dot(direction);      // 点积
+float cross = position.Cross(direction);  // 叉积（返回标量）
+
+// 插值
+Vector2 lerpResult = position.Lerp(target, 0.5f); // 线性插值
+Vector2 slerpResult = position.Slerp(target, 0.5f); // 球面插值</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">Vector3 - 3D 向量</h3>
+                <p class="text-gray-300 mb-4">用于 3D 位置、方向、速度等。</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 创建向量
+Vector3 position = new Vector3(1, 2, 3);
+Vector3 forward = Vector3.Forward;  // (0, 0, -1)
+Vector3 up = Vector3.Up;            // (0, 1, 0)
+Vector3 right = Vector3.Right;      // (1, 0, 0)
+
+// 常用属性
+float x = position.X;
+float y = position.Y;
+float z = position.Z;
+Vector2 xy = position.Xy;           // 提取 XY 平面
+
+// 常用方法
+float length = position.Length;
+Vector3 normalized = position.Normalized;
+Vector3 rotated = position.Rotated(Vector3.Up, Mathf.Pi / 4);
+float dot = position.Dot(other);
+Vector3 cross = position.Cross(other); // 返回向量
+
+// 3D 特有
+Vector3 floor = position.Floor();
+Vector3 ceil = position.Ceil();
+Vector3 snapped = position.Snapped(new Vector3(0.1f, 0.1f, 0.1f));</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">💡 实用技巧</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">移动角色</h4>
+                        <div class="code-block">
+                            <code>Vector2 velocity = Vector2.Zero;
+velocity.X = Input.GetAxis("left", "right") * speed;
+velocity.Y = Input.GetAxis("up", "down") * speed;
+velocity = velocity.Normalized() * speed;</code>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">朝向目标</h4>
+                        <div class="code-block">
+                            <code>Vector2 direction = (targetPosition - position).Normalized();
+rotation = direction.Angle(); // 2D
+// 或
+LookAt(targetPosition); // 3D</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 2. 颜色与矩形</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-pink-400">Color - 颜色</h3>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 预定义颜色
+Color red = Colors.Red;
+Color blue = Colors.Blue;
+Color white = Colors.White;
+Color transparent = Colors.Transparent;
+
+// 自定义颜色
+Color custom1 = new Color(1, 0, 0);           // RGB (0-1)
+Color custom2 = new Color(1, 0, 0, 0.5f);     // RGBA
+Color custom3 = Color.FromHtml("#ff0000");    // HTML 色值
+Color custom4 = Color.FromRgb(255, 0, 0);     // RGB (0-255)
+
+// 属性
+float r = color.R;
+float g = color.G;float b = color.B;
+float a = color.A;
+
+// 方法
+Color lighter = color.Lightened(0.2f);
+Color darker = color.Darkened(0.2f);
+Color inverted = color.Inverted();
+Color blended = color.Blend(overlayColor);</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400">Rect2 - 2D 矩形</h3>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 创建矩形
+Rect2 rect1 = new Rect2(0, 0, 100, 100);  // x, y, width, height
+Rect2 rect2 = new Rect2(new Vector2(0, 0), new Vector2(100, 100));
+
+// 属性
+float x = rect.Position.X;
+float y = rect.Position.Y;
+float w = rect.Size.X;
+float h = rect.Size.Y;
+float right = rect.End.X;  // 右边缘
+float bottom = rect.End.Y; // 下边缘
+
+// 方法
+bool contains = rect.HasPoint(new Vector2(50, 50));
+Rect2 expanded = rect.Grow(10);  // 扩展 10 像素
+Rect2 intersect = rect.Intersect(other);
+bool overlaps = rect.Intersects(other);</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 3. 变换类型</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-orange-400">Transform2D - 2D 变换</h3>
+                <p class="text-gray-300 mb-4">包含旋转、缩放、平移信息。</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 创建变换
+Transform2D identity = Transform2D.Identity;
+Transform2D transform = new Transform2D();
+
+// 设置属性
+transform.Origin = new Vector2(100, 100);  // 平移
+transform = transform.Rotated(Mathf.Pi / 4); // 旋转 45 度
+transform = transform.Scaled(new Vector2(2, 2)); // 缩放 2 倍
+
+// 组合变换
+Transform2D combined = transform1 * transform2;
+
+// 应用变换
+Vector2 transformedPoint = transform * localPoint;
+
+// 在节点中使用
+transform = GlobalTransform;  // 获取全局变换
+GlobalTransform = transform;  // 设置全局变换</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-orange-400">Transform3D - 3D 变换</h3>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 创建变换
+Transform3D identity = Transform3D.Identity;
+Transform3D transform = new Transform3D();
+
+// 设置属性
+transform.Origin = new Vector3(0, 0, 0);
+transform.Basis = Basis.Identity;
+
+// 使用 Basis 进行旋转缩放
+transform.Basis = transform.Basis.Rotated(Vector3.Up, angle);
+transform.Basis = transform.Basis.Scaled(scale);
+
+// 快速方法
+transform = transform.Translated(offset);
+transform = transform.Rotated(axis, angle);
+transform = transform.Scaled(scale);
+
+// 在 3D 节点中使用
+GlobalTransform = transform;
+Transform3D current = GlobalTransform;</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-cyan-400">Quaternion - 四元数</h3>
+                <p class="text-gray-300 mb-4">用于 3D 旋转，避免万向节锁。</p>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 创建四元数
+Quaternion identity = Quaternion.Identity;
+Quaternion rotation = new Quaternion(axis, angle);
+
+// 从欧拉角创建
+Quaternion q = Quaternion.FromEuler(new Vector3(pitch, yaw, roll));
+
+// 常用方法
+Quaternion result = q1 * q2;  // 组合旋转
+Vector3 rotated = q * vector;  // 旋转向量
+Quaternion inverted = q.Inverse();
+
+// 插值（平滑旋转）
+Quaternion slerpResult = Quaternion.Slerp(q1, q2, 0.5f);
+
+// 转换为欧拉角
+Vector3 euler = q.GetEuler();</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 4. 全局工具类</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">GD - Godot 全局工具</h3>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 输出调试
+GD.Print("Hello, Godot!");
+GD.Print($"Position: {position}");
+GD.PrintErr("Error message!");
+GD.PrintStack();  // 打印调用栈
+
+// 数学工具
+float result = GD.RandRange(0, 10);  // 随机数
+int intResult = GD.RandiRange(0, 10);
+Vector3 randomDir = GD.RandomUnitVector();
+
+// 类型转换
+int num = GD.StrToInt("123");
+string str = GD.IntToStr(123);
+Variant variant = GD.VarToString(value);
+
+// 时间与帧
+double time = GD.GetProcessTime();
+int fps = Engine.GetFramesPerSecond();
+
+// 其他实用方法
+string path = GD.ProjectSettingsGlobalize("res://");
+bool fileExists = GD.FilesystemHas("res://file.txt");</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">Mathf - 数学工具</h3>
+                
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 常量
+float pi = Mathf.Pi;      // 3.14159...
+float tau = Mathf.Tau;    // 2 * Pi
+float inf = Mathf.Inf;
+float nan = Mathf.NaN;
+
+// 三角函数
+float sin = Mathf.Sin(angle);
+float cos = Mathf.Cos(angle);
+float tan = Mathf.Tan(angle);
+float angle2 = Mathf.Atan2(y, x);
+
+// 常用运算
+float sqrt = Mathf.Sqrt(16);
+float pow = Mathf.Pow(2, 3);
+float abs = Mathf.Abs(-5);
+float sign = Mathf.Sign(-5);  // -1
+
+// 取整
+float floor = Mathf.Floor(3.7f);   // 3
+float ceil = Mathf.Ceil(3.2f);     // 4
+float round = Mathf.Round(3.5f);   // 4
+
+// 插值
+float lerp = Mathf.Lerp(0, 10, 0.5f);  // 5
+float angleLerp = Mathf.LerpAngle(a1, a2, 0.5f);
+
+// 限制
+float clamped = Mathf.Clamp(value, 0, 100);
+float snapped = Mathf.Snapped(value, 0.1f);</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-green-400">📝 实践练习：类型操作练习</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-green-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习目标</h3>
+                <p class="text-gray-300 mb-6">创建一个脚本，演示各种 Godot 类型的使用方法。</p>
+                
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习要求</h3>
+                <ol class="space-y-4 text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                        <span>创建 TypeDemo.cs 脚本，继承自 Node</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                        <span>在 _Ready() 中演示 Vector2 的各种运算</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                        <span>使用 Color 创建渐变色并输出到控制台</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                        <span>使用 Transform2D 实现简单的旋转动画</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                        <span>使用 GD 和 Mathf 工具类生成随机位置</span>
+                    </li>
+                </ol>
+                
+                <div class="mt-6 p-4 bg-gray-900 rounded-lg border border-gray-700">
+                    <h4 class="font-semibold text-yellow-400 mb-2">💡 提示</h4>
+                    <p class="text-gray-400 text-sm">按 F1 打开 Godot 文档，搜索类型名称查看完整 API 参考。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center pt-8 border-t border-gray-700">
+            <a href="lesson3-node-system.html" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                ← 上一课：节点与场景系统
+            </a>
+            <a href="lesson5-input-system.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
+                下一课：输入处理系统 →
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/Magic-KK/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="../js/theme.js"></script>
+</body>
+</html>
