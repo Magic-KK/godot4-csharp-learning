@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 5 课：输入处理系统 - Godot 4 C# 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="../index.html" class="text-xl font-bold text-blue-400">🎮 Godot4 C#</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="../index.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                    <a href="basics.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                    <a href="../advanced.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                    <a href="../projects.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-700" aria-label="菜单">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="nav-menu md:hidden">
+                <a href="../index.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                <a href="basics.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">基础教程</a>
+                <a href="../advanced.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">进阶内容</a>
+                <a href="../projects.html" class="block hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">实战项目</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Lesson Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl">5</span>
+                <div>
+                    <h1 class="text-4xl font-bold text-blue-400">输入处理系统</h1>
+                    <p class="text-gray-400 mt-2">⏱️ 预计时间：40 分钟 · 难度：⭐⭐</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-blue-400">🎯 学习目标</h2>
+            <ul class="space-y-2 text-gray-300">
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>理解 Godot 的输入映射系统</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>掌握键盘、鼠标、手柄输入处理</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>学会使用 Input 类的常用方法</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-400 mt-1">✓</span>
+                    <span>实现角色移动和交互控制</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 1 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 1. 输入映射配置</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">什么是输入映射？</h3>
+                <p class="text-gray-300 mb-4">
+                    Godot 的输入映射系统允许你将物理输入（按键、鼠标按钮等）映射到逻辑动作名称，
+                    使代码更灵活、易于修改和重新绑定。
+                </p>
+                
+                <div class="p-4 bg-blue-900/30 rounded-lg border border-blue-700 mb-4">
+                    <h4 class="font-semibold text-blue-400 mb-2">💡 优势</h4>
+                    <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• 代码不直接绑定具体按键，易于修改</li>
+                        <li>• 支持多按键映射到同一动作</li>
+                        <li>• 方便实现按键自定义功能</li>
+                        <li>• 统一处理键盘、鼠标、手柄</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">配置输入映射</h3>
+                <p class="text-gray-300 mb-4">在项目设置中配置输入映射：</p>
+                
+                <div class="space-y-4">
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-yellow-400 mb-2">步骤 1：打开项目设置</h4>
+                        <p class="text-gray-400 text-sm">项目 (Project) → 项目设置 (Project Settings) → 输入映射 (Input Map)</p>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-blue-400 mb-2">步骤 2：添加动作</h4>
+                        <p class="text-gray-400 text-sm mb-2">在「动作」栏输入动作名称，点击「添加」按钮：</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-800 px-3 py-1 rounded text-sm font-mono">move_up</span>
+                            <span class="bg-gray-800 px-3 py-1 rounded text-sm font-mono">move_down</span>
+                            <span class="bg-gray-800 px-3 py-1 rounded text-sm font-mono">move_left</span>
+                            <span class="bg-gray-800 px-3 py-1 rounded text-sm font-mono">move_right</span>
+                            <span class="bg-gray-800 px-3 py-1 rounded text-sm font-mono">jump</span>
+                            <span class="bg-gray-800 px-3 py-1 rounded text-sm font-mono">attack</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <h4 class="font-semibold text-purple-400 mb-2">步骤 3：绑定按键</h4>
+                        <p class="text-gray-400 text-sm mb-2">为每个动作添加按键（支持多个）：</p>
+                        <div class="grid md:grid-cols-2 gap-3 text-sm">
+                            <div>
+                                <code class="text-blue-400">move_up</code>
+                                <span class="text-gray-500"> → W / ↑ / 手柄上</span>
+                            </div>
+                            <div>
+                                <code class="text-blue-400">move_down</code>
+                                <span class="text-gray-500"> → S / ↓ / 手柄下</span>
+                            </div>
+                            <div>
+                                <code class="text-blue-400">move_left</code>
+                                <span class="text-gray-500"> → A / ← / 手柄左</span>
+                            </div>
+                            <div>
+                                <code class="text-blue-400">move_right</code>
+                                <span class="text-gray-500"> → D / → / 手柄右</span>
+                            </div>
+                            <div>
+                                <code class="text-blue-400">jump</code>
+                                <span class="text-gray-500"> → Space / K / 手柄 A</span>
+                            </div>
+                            <div>
+                                <code class="text-blue-400">attack</code>
+                                <span class="text-gray-500"> → J / 鼠标左键 / 手柄 X</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-orange-400">代码中动态添加映射</h3>
+                <div class="code-block">
+                    <code class="language-csharp">public override void _Ready()
+{
+    // 动态添加输入映射（可选）
+    if (!InputMap.HasAction("my_action"))
+    {
+        InputMap.AddAction("my_action");
+        InputMap.ActionAddEvent("my_action", new InputEventKey { Keycode = Key.Z });
+    }
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 2. Input 类常用方法</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">动作输入（推荐）</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="pb-3 text-blue-400 font-semibold">方法</th>
+                                <th class="pb-3 text-blue-400 font-semibold">说明</th>
+                                <th class="pb-3 text-blue-400 font-semibold">示例</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-300">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">IsActionPressed()</td>
+                                <td class="py-3">动作是否被按下（持续）</td>
+                                <td class="py-3 font-mono text-xs">Input.IsActionPressed("move_right")</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">IsActionJustPressed()</td>
+                                <td class="py-3">动作是否刚被按下（单次）</td>
+                                <td class="py-3 font-mono text-xs">Input.IsActionJustPressed("jump")</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">IsActionJustReleased()</td>
+                                <td class="py-3">动作是否刚被释放（单次）</td>
+                                <td class="py-3 font-mono text-xs">Input.IsActionJustReleased("attack")</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-3 font-mono text-sm">GetActionStrength()</td>
+                                <td class="py-3">获取动作强度（0-1）</td>
+                                <td class="py-3 font-mono text-xs">float strength = Input.GetActionStrength("accelerate")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">轴向输入（2D 移动）</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 获取轴向值（-1 到 1）
+float h = Input.GetAxis("left", "right");  // 水平轴
+float v = Input.GetAxis("up", "down");     // 垂直轴
+
+// 组合为向量
+Vector2 direction = new Vector2(h, v);
+
+// 标准化（避免对角线更快）
+if (direction.LengthSquared() > 0)
+{
+    direction = direction.Normalized();
+}
+
+// 应用移动
+velocity.X = direction.X * speed;
+velocity.Y = direction.Y * speed;</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">鼠标输入</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 鼠标位置
+Vector2 mousePos = GetGlobalMousePosition();  // 2D
+Vector3 mousePos3D = GetGlobalMousePosition(); // 3D
+
+// 鼠标按钮
+bool leftPressed = Input.IsMouseButtonPressed(MouseButton.Left);
+bool rightPressed = Input.IsMouseButtonPressed(MouseButton.Right);
+bool middlePressed = Input.IsMouseButtonPressed(MouseButton.Middle);
+
+// 鼠标滚轮
+float wheelDelta = Input.GetAxis("ui_focus_prev", "ui_focus_next");
+
+// 鼠标模式（FPS 游戏常用）
+Input.MouseMode = Input.MouseModeEnum.Captured;  // 隐藏并锁定
+Input.MouseMode = Input.MouseModeEnum.Visible;   // 显示</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400">手柄输入</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">// 检查手柄是否连接
+bool controllerConnected = Input.GetConnectedJoypads().Count > 0;
+
+// 手柄按钮（使用动作映射，推荐）
+bool aPressed = Input.IsActionPressed("ui_accept");
+
+// 或直接使用手柄按钮
+bool buttonA = Input.IsJoyButtonPressed(JoyButton.A);
+bool buttonB = Input.IsJoyButtonPressed(JoyButton.B);
+
+// 手柄摇杆
+float leftStickX = Input.GetJoyAxis(0, JoyAxis.LeftX);
+float leftStickY = Input.GetJoyAxis(0, JoyAxis.LeftY);
+Vector2 leftStick = new Vector2(leftStickX, leftStickY);
+
+// 手柄震动
+Input.StartJoyVibration(0, 0.5f, 0.5f, 1.0f);</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">📌 3. 实现角色控制器</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <h3 class="text-lg font-semibold mb-4 text-blue-400">2D 角色移动示例</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">using Godot;
+
+public partial class Player : CharacterBody2D
+{
+    [Export] public float Speed { get; set; } = 200f;
+    [Export] public float JumpVelocity { get; set; } = -400f;
+    
+    private float _gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        // 添加重力
+        if (!IsOnFloor())
+        {
+            Velocity += new Vector2(0, _gravity) * (float)delta;
+        }
+        
+        // 处理跳跃
+        if (Input.IsActionJustPressed("jump") && IsOnFloor())
+        {
+            Velocity = new Vector2(Velocity.X, JumpVelocity);
+        }
+        
+        // 处理移动
+        float inputDirection = Input.GetAxis("left", "right");
+        Velocity = new Vector2(inputDirection * Speed, Velocity.Y);
+        
+        // 应用移动
+        MoveAndSlide();
+    }
+}</code>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-purple-400">8 方向移动（带动画）</h3>
+                <div class="code-block mb-4">
+                    <code class="language-csharp">public partial class Player : CharacterBody2D
+{
+    [Export] public float Speed { get; set; } = 200f;
+    private Sprite2D _sprite;
+    private AnimationPlayer _animPlayer;
+    
+    public override void _Ready()
+    {
+        _sprite = GetNode<Sprite2D>("Sprite2D");
+        _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+    }
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        // 获取输入方向
+        Vector2 direction = new Vector2(
+            Input.GetAxis("left", "right"),
+            Input.GetAxis("up", "down")
+        );
+        
+        // 标准化避免对角线更快
+        if (direction.LengthSquared() > 0)
+        {
+            direction = direction.Normalized();
+            _animPlayer.Play("walk");
+            
+            // 翻转精灵
+            if (direction.X != 0)
+            {
+                _sprite.FlipH = direction.X < 0;
+            }
+        }
+        else
+        {
+            _animPlayer.Play("idle");
+        }
+        
+        // 应用移动
+        Velocity = direction * Speed;
+        MoveAndSlide();
+    }
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-green-400">📝 实践练习：创建角色控制器</h2>
+            
+            <div class="bg-gray-800 rounded-lg p-6 border border-green-700">
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习目标</h3>
+                <p class="text-gray-300 mb-6">创建一个完整的 2D 角色控制器，支持移动、跳跃和攻击。</p>
+                
+                <h3 class="text-lg font-semibold mb-4 text-green-400">练习要求</h3>
+                <ol class="space-y-4 text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                        <span>配置输入映射：move_left, move_right, jump, attack</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                        <span>创建 Player 场景（CharacterBody2D + Sprite + CollisionShape）</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                        <span>实现左右移动和跳跃功能</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                        <span>添加攻击动画和攻击判定</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                        <span>实现面向方向的翻转（FlipH）</span>
+                    </li>
+                </ol>
+                
+                <div class="mt-6 p-4 bg-gray-900 rounded-lg border border-gray-700">
+                    <h4 class="font-semibold text-yellow-400 mb-2">💡 提示</h4>
+                    <p class="text-gray-400 text-sm">使用 MoveAndSlide() 处理物理移动，它会自动处理碰撞和重力。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center pt-8 border-t border-gray-700">
+            <a href="lesson4-godot-types.html" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                ← 上一课：Godot 内置类型
+            </a>
+            <a href="lesson6-2d-basics.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
+                下一课：2D 游戏开发基础 →
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2025-2026 Godot4 C# 学习网站 | 
+                <a href="https://github.com/Magic-KK/godot4-csharp-learning" class="text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="../js/theme.js"></script>
+</body>
+</html>
